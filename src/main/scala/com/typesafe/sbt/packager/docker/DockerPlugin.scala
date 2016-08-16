@@ -299,7 +299,7 @@ object DockerPlugin extends AutoPlugin {
 
     if (latest) {
       val name = tag.substring(0, tag.lastIndexOf(":")) + ":latest"
-      val latestCmd = Seq("docker", "tag", "-f", tag, name)
+      val latestCmd = Seq("docker", "tag", tag, name)
       Process(latestCmd).! match {
         case 0 => log.info("Update Latest from image " + tag)
         case n => sys.error("Failed to run docker tag")
@@ -308,7 +308,7 @@ object DockerPlugin extends AutoPlugin {
 
     additionalVersions foreach { v =>
       val name = tag.substring(0, tag.lastIndexOf(":")) + ":" + v
-      val cmd = Seq("docker", "tag", "-f", tag, name)
+      val cmd = Seq("docker", "tag", tag, name)
       Process(cmd).! match {
         case 0 => log.info("Update version " + v + " from image " + tag)
         case n => sys.error("Failed to run docker tag")
